@@ -1,0 +1,50 @@
+.conteiner-main-content {
+  margin: 50px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+  grid-template-columns: fit-content;
+  max-width: 1000px;
+  text-align: center;
+  min-width: 700px;
+  text-transform: uppercase;
+	font-weight: bold;
+	font-size: 18px;
+}
+.box {
+  background: rgba(255, 255, 255, 0.6);
+  -webkit-backdrop-filter: blur(21px);
+  backdrop-filter: blur(21px);
+  border-radius: 25px;
+  -webkit-box-shadow: 5.5px 5px 10px 3px rgb(80, 77, 77);
+  -moz-box-shadow: 5.5px 5px 10px 3px rgb(80, 77, 77);
+  box-shadow: 5.5px 5px 10px 3px rgb(80, 77, 77);
+}
+
+.main-section {
+  grid-area: 1 / 1 / 4 / 4;
+  height: 100%;
+  
+}
+.reward-info-section {
+  grid-area: 1 / 4 / 4 / 6;
+  height: 30rem;
+  display: grid;
+  grid-row-gap: 20px;
+}
+
+.rewards {
+  height: 100%;
+  width: 100%;
+}
+.info {
+  height: 100%;
+  width: 100%;
+}
+
+.miner-rules {
+  grid-area:  4 / 1 / 5 / 6;
+  width: 100%;
+}
