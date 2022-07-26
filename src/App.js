@@ -1,12 +1,34 @@
 import { useEffect, useState } from "react";
-import Home from "./components/buttonConnect/button";
 import MainContent from "./components/mainContent/mainContent";
 import Navbar from "./components/navbar/navbar";
 import "./App.css";
 import { connectors } from "./connectors";
 import { useWeb3React } from "@web3-react/core";
+import { toHex } from "../../utils";
+import { networkParams } from "../../networks";
 export default function App() {
-  const { error, chainId, activate, active } = useWeb3React();
+  const { chainId, library, activate, active } = useWeb3React();
+  const [error, setError] = useState("");
+  
+  const switchNetwork = async (network) => {
+    try {
+      await library.provider.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: toHex(network) }],
+      });
+    } catch (switchError) {
+      if (switchError.code === 4902) {
+        try {
+          await library.provider.request({
+            method: "wallet_addEthereumChain",
+            params: [networkParams[toHex(network)]],
+          });
+        } catch (error) {
+          setError(error);
+        }
+      }
+    }
+  };
 
   useEffect(() => {
     const connectOnRefresh = async () => {
@@ -20,7 +42,7 @@ export default function App() {
       }
     };
     connectOnRefresh();
-  },[]);
+  }, []);
 
   useEffect(() => {
     const { ethereum } = window;
@@ -30,8 +52,11 @@ export default function App() {
         console.log("Handling 'connect' event");
         activate(connectors[provider]);
       };
-      const handleChainChanged = (chainId) => {
-        console.log("Handling 'chainChanged' event with payload", chainId);
+      const handleChainChanged = (chainIdWindow) => {
+        if (chainId !== 5) {
+          switchNetwork(5)
+        }
+        console.log("Handling 'chainChanged' event with payload", chainIdWindow);
         activate(connectors[provider]);
       };
       const handleAccountsChanged = (accounts) => {
