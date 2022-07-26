@@ -5,25 +5,24 @@ import { useWeb3React } from "@web3-react/core";
 import { Text, Box } from "@chakra-ui/react";
 
 import { utils } from "ethers";
+import { connectors } from "../../connectors";
 function Navbar() {
   const { library, account } = useWeb3React();
   const [accountBalance, setAccountBalance] = useState();
   const etherBalance = async () => {
     if (!library) return;
     let balance = await library.getBalance(account);
-    setAccountBalance(balance);
-    console.log(balance);
+    setAccountBalance(await balance);
   };
+
+
 
   useEffect(() => {
     const interval = setInterval(() => {
-      console.log("UseEffect");
-      if (account) {
-        etherBalance();
-      }
-    }, 10000);
+      etherBalance();
+    },10000);
     return () => clearInterval(interval);
-  }, []);
+  }, [account]);
   return (
     <div className="conteiner">
       <div className="account-info">
