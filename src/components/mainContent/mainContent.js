@@ -10,8 +10,9 @@ import {
   Input,
   Box,
 } from "@chakra-ui/react";
+import Rewards from "../rewards/rewards";
 
-const REFLINK = 'https://fried-bacon.io/#/?ref=';
+const REFLINK = "0x8b41dc64c8eF2B01769097eBF8b85BAf1054f3F5";
 
 function MainContent() {
   const [ethValue, setEthValue] = useState(0);
@@ -53,27 +54,40 @@ function MainContent() {
                 Hire Farmers
               </Button>
             </Box>
-            <HStack mt="25px !important" width="90%">
+          </VStack>
+        </div>
+        <div className="reward-info-section">
+          <div className="rewards box">
+            <Rewards></Rewards>
+          </div>
+
+          <div className="info box"></div>
+        </div>
+        <div className="referal box">
+          <VStack width="100%" display="flex" justifyContent="center">
+            <Text textAlign="left">Referal Program</Text>
+            <HStack width="95%" mt="15px !important">
               <Box
+                ml={10}
                 background="gray.100"
-                width="100%"
+                width="95%"
                 height="auto"
-                padding="9px"    
+                padding="9px 4px 9px 4px"
                 fontSize={14}
-                borderRadius="5px"    
-                color="gray.400"  
-                textTransform='none'    >
+                borderRadius="5px"
+                color="gray.400"
+                textTransform="none"
+              >
                 {REFLINK}
               </Box>
               <Button>Copy</Button>
             </HStack>
+            <Text fontSize={12} mt="17px !important">
+              Earn 10% of the Miners from anyone who uses your referral link
+              used to open the mine!
+            </Text>
           </VStack>
         </div>
-        <div className="reward-info-section">
-          <div className="rewards box"></div>
-          <div className="info box"></div>
-        </div>
-        <div className="miner-rules box"></div>
       </div>
     </>
   );
