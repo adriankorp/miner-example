@@ -36,6 +36,17 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    setTimeout(async () => {
+      if (window.ethereum !== 0x5) {
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: toHex(5) }],
+        });
+      }
+    }, 2000);
+  }, []);
+
+  useEffect(() => {
     const provider = window.localStorage.getItem("provider");
 
     const handleChainChanged = async (chain) => {
