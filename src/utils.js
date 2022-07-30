@@ -1,3 +1,5 @@
+export const contractAddress = '0x0116CeA9062e976027399bd34B07e12e7Ad9D5Aa'
+
 export const truncateAddress = (address) => {
   if (!address) return "No Account";
   const match = address.match(
