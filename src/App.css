@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Exo:400,700');
+
 .app-main {
   display: flex;
   justify-content: center;
   align-items: center;
-  
+  font-family: 'Exo', sans-serif;
 }
+
