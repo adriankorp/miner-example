@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import MainContent from "./components/mainContent/mainContent";
 import Navbar from "./components/navbar/navbar";
 import "./App.css";
+import { Toaster } from "react-hot-toast";
 import { connectors } from "./connectors";
 import { useWeb3React } from "@web3-react/core";
-import { toHex } from "../../utils";
-import { networkParams } from "../../networks";
+import { toHex } from "./utils";
+
 export default function App() {
-  const { chainId, library, activate, active } = useWeb3React();
-  const [error, setError] = useState("");
-  
+  const { library, activate } = useWeb3React();
+
   const switchNetwork = async (network) => {
     try {
       await library.provider.request({
@@ -17,16 +17,7 @@ export default function App() {
         params: [{ chainId: toHex(network) }],
       });
     } catch (switchError) {
-      if (switchError.code === 4902) {
-        try {
-          await library.provider.request({
-            method: "wallet_addEthereumChain",
-            params: [networkParams[toHex(network)]],
-          });
-        } catch (error) {
-          setError(error);
-        }
-      }
+      console.log(switchError);
     }
   };
 
@@ -45,53 +36,29 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    const { ethereum } = window;
     const provider = window.localStorage.getItem("provider");
-    if (ethereum && ethereum.on && !active && !error) {
-      const handleConnect = () => {
-        console.log("Handling 'connect' event");
-        activate(connectors[provider]);
-      };
-      const handleChainChanged = (chainIdWindow) => {
-        if (chainId !== 5) {
-          switchNetwork(5)
-        }
-        console.log("Handling 'chainChanged' event with payload", chainIdWindow);
-        activate(connectors[provider]);
-      };
-      const handleAccountsChanged = (accounts) => {
-        console.log("Handling 'accountsChanged' event with payload", accounts);
-        console.log(accounts);
-        if (accounts.length > 0) {
-          activate(connectors[provider]);
-        }
-      };
-      const handleNetworkChanged = (networkId) => {
-        console.log("Handling 'networkChanged' event with payload", networkId);
-        activate(connectors[provider]);
-      };
 
-      ethereum.on("connect", handleConnect);
-      ethereum.on("chainChanged", handleChainChanged);
-      ethereum.on("accountsChanged", handleAccountsChanged);
-      ethereum.on("networkChanged", handleNetworkChanged);
+    const handleChainChanged = async (chain) => {
+      console.log(chain);
+      if (chain !== 0x5) switchNetwork(5);
+    };
 
-      return () => {
-        if (ethereum.removeListener) {
-          ethereum.removeListener("connect", handleConnect);
-          ethereum.removeListener("chainChanged", handleChainChanged);
-          ethereum.removeListener("accountsChanged", handleAccountsChanged);
-          ethereum.removeListener("networkChanged", handleNetworkChanged);
-        }
-      };
+    if (provider) {
+      window.ethereum.on("chainChanged", handleChainChanged);
     }
-  }, [active, error, activate]);
+
+    return () => {
+      window.ethereum.removeListener("chainChanged", handleChainChanged);
+    };
+  });
+
   return (
     <>
       <Navbar />
       <div className="app-main">
         <MainContent />
       </div>
+      <Toaster />
     </>
   );
 }
