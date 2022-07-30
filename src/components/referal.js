@@ -21,7 +21,7 @@ function Referal(props) {
               textTransform="none"
               textAlign="center"
             >
-              {REFLINK + props.account}
+              {props.account ? REFLINK + props.account : REFLINK}
             </Box>
             <Button
               width="100%"
@@ -53,7 +53,7 @@ function Referal(props) {
               textTransform="none"
               textAlign="center"
             >
-              {REFLINK + props.account}
+              {props.account ? REFLINK + props.account : REFLINK}
             </Box>
             <Button
               onClick={() =>
