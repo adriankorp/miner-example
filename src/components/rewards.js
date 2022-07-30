@@ -68,7 +68,7 @@ function Rewards(props) {
         <Button width="70%" mt="25px !important" onClick={reInvest}>
           RE-INVEST
         </Button>
-        <Button width="70%" onClick={sellMiners}>
+        <Button width="70%" mb="10px !important"onClick={sellMiners}>
           GET ETH
         </Button>
       </VStack>
