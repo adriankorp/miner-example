@@ -3,21 +3,21 @@ import WalletConnect from "../buttonConnect/button";
 import "./navbar.css";
 import { useWeb3React } from "@web3-react/core";
 import { Text, Box } from "@chakra-ui/react";
-
 import { utils } from "ethers";
-import { connectors } from "../../connectors";
+
 function Navbar() {
   const { library, account } = useWeb3React();
   const [accountBalance, setAccountBalance] = useState();
   const etherBalance = async () => {
     if (!library) return;
     let balance = await library.getBalance(account);
-    setAccountBalance(await balance);
+    setAccountBalance(balance);
   };
 
 
 
   useEffect(() => {
+    etherBalance()
     const interval = setInterval(() => {
       etherBalance();
     },10000);
