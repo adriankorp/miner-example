@@ -33,7 +33,6 @@ export default function SelectWalletModal({ isOpen, closeModal }) {
         />
         <ModalBody paddingBottom="1.5rem">
           <VStack>
-
             <Button
               variant="outline"
               onClick={() => {
