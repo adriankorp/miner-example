@@ -1,7 +1,7 @@
 import React from "react";
 import { VStack, Button, Text, HStack, Box } from "@chakra-ui/react";
 import { useMediaQuery } from "@chakra-ui/react";
-const REFLINK = "http://localhost:3000/#/?ref=";
+const REFLINK = "https://miner-example.netlify.app/?ref=";
 function Referal(props) {
   const [isSmallerThan950] = useMediaQuery("(max-width: 950px)");
   return (
